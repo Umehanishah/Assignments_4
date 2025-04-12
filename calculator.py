@@ -1,14 +1,17 @@
-import streamlit as st
+import streamlit as st # type: ignore
 
 def main():
     st.title("🧮 Simple Calculator")
 
-    # Get user inputs using Streamlit widgets
+   
     first_number = st.number_input("Enter the first number:", step=1.0, format="%.2f")
     second_number = st.number_input("Enter the second number:", step=1.0, format="%.2f")
 
-    # Operation selection
-    operation = st.selectbox("Choose an operation:", ["Addition (+)", "Subtraction (-)", "Multiplication (*)", "Division (/)"])
+    operation = st.selectbox("Choose an operation:", 
+                             ["Addition (+)", 
+                              "Subtraction (-)", 
+                              "Multiplication (*)", 
+                              "Division (/)"])
 
     if st.button("Calculate"):
         if operation == "Addition (+)":
