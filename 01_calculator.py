@@ -4,8 +4,8 @@ def main():
     st.title("🧮 Simple Calculator")
 
    
-    first_number = st.number_input("Enter the first number:", format="%.2f")
-    second_number = st.number_input("Enter the second number:", format="%.2f")
+    first_number = st.number_input("Enter the first number:", step=1.0, )
+    second_number = st.number_input("Enter the second number:", step=1.0, )
 
     operation = st.selectbox("Choose an operation:", 
                              ["Addition (+)", 
