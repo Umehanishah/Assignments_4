@@ -1,4 +1,4 @@
-import streamlit as st
+import streamlit as st # type: ignore
 from datetime import datetime
 import random
 
@@ -30,16 +30,16 @@ def main():
 
     # Quiz question pool
     question_options = [
-        ("Who is the oldest?", max(character_ages, key=character_ages.get)),
-        ("Who is the youngest?", min(character_ages, key=character_ages.get)),
-        ("Who is older: Beth or Chen?", "Chen" if chen_age > beth_age else "Beth"),
-        ("Is Drew older than Ethan?", "Yes" if drew_age > ethan_age else "No"),
-        ("Is Anton the youngest?", "Yes" if anton_age == min(character_ages.values()) else "No")
+        ("Who is the oldest?", max(character_ages, key=character_ages.get), list(character_ages.keys())),
+        ("Who is the youngest?", min(character_ages, key=character_ages.get), list(character_ages.keys())),
+        ("Who is older: Beth or Chen?", "Chen" if chen_age > beth_age else "Beth", ["Beth", "Chen"]),
+        ("Is Drew older than Ethan?", "Yes" if drew_age > ethan_age else "No", ["Yes", "No"]),
+        ("Is Anton the youngest?", "Yes" if anton_age == min(character_ages.values()) else "No", ["Yes", "No"])
     ]
 
-    question, correct_answer = random.choice(question_options)
+    question, correct_answer, choices = random.choice(question_options)
     st.subheader(f"🧐 {question}")
-    user_answer = st.text_input("Your answer:")
+    user_answer = st.selectbox("Choose your answer:", choices)
 
     if st.button("✅ Submit Answer"):
         if user_answer.strip().lower() == correct_answer.lower():
