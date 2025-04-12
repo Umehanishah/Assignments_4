@@ -1,4 +1,4 @@
-import streamlit as st # type: ignore
+import streamlit as st  # type: ignore
 from datetime import datetime
 import random
 
@@ -6,7 +6,7 @@ def main():
     st.set_page_config(page_title="🧩 Age Riddle Quiz Game", page_icon="🧠")
     st.title("🧠 Age Riddle Quiz + 🎂 Age Calculator")
 
-    # Static character data based on the riddle
+    # Age logic (invisible to the user)
     anton_age = 21
     beth_age = anton_age + 6
     chen_age = beth_age + 20
@@ -21,9 +21,17 @@ def main():
         "Ethan": ethan_age
     }
 
-    st.header("📋 Character Ages")
-    for name, age in character_ages.items():
-        st.write(f"**{name}** is **{age}** years old.")
+    # Show the age riddle story to the user
+    st.header("📖 Meet the Characters")
+    st.markdown("""
+**Anton**, **Beth**, **Chen**, **Drew**, and **Ethan** are all friends. Their ages are as follows:
+
+- Anton is 21 years old.  
+- Beth is 6 years older than Anton.  
+- Chen is 20 years older than Beth.  
+- Drew is as old as Chen's age plus Anton's age.  
+- Ethan is the same age as Chen.
+    """)
 
     st.markdown("---")
     st.header("🎯 Riddle Quiz Time!")
