@@ -1,21 +1,18 @@
+import streamlit as st # type: ignore
+
 def main():
-    print("🔢 Welcome to the Power Calculator!")
+    st.title("🔢 Power Calculator")
+    
+    num = st.number_input("📥 Enter a number:", format="%.2f")
+    operation = st.radio("What would you like to calculate?", ["Square", "Cube"])
 
-    num: float = float(input("📥 Type a number: "))
-
-    print("What would you like to calculate?")
-    print("1️⃣ Square")
-    print("2️⃣ Cube")
-    choice = input("👉 Enter 1 or 2: ")
-
-    if choice == "1":
-        result = num ** 2
-        print(f"🧮 {num} squared is {result}")
-    elif choice == "2":
-        result = num ** 3
-        print(f"🧮 {num} cubed is {result}")
-    else:
-        print("⚠️ Invalid choice. Please enter 1 or 2.")
+    if st.button("Calculate"):
+        if operation == "Square":
+            result = num ** 2
+            st.success(f"🧮 {num} squared is {result:.2f}")
+        else:
+            result = num ** 3
+            st.success(f"🧮 {num} cubed is {result:.2f}")
 
 if __name__ == '__main__':
     main()
