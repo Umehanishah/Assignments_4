@@ -1,30 +1,31 @@
+import streamlit as st
+
 def main():
-    
-    animal = input("What's your favorite animal? ")
+    st.title("Favorite Animal App 🐾")
 
-    animal_emojis = {
-        "dog": "🐶",
-        "cat": "🐱",
-        "cow": "🐄",
-        "lion": "🦁",
-        "tiger": "🐯",
-        "monkey": "🐵",
-        "elephant": "🐘",
-        "panda": "🐼",
-        "rabbit": "🐰",
-        "fox": "🦊",
-        "bear": "🐻",
-        "chicken": "🐔",
-        "penguin": "🐧",
-        "horse": "🐴",
-        "frog": "🐸"
-    }
+    animal = st.text_input("What's your favorite animal?")
 
-  
-    emoji = animal_emojis.get(animal.lower(), "🐾")
+    if animal:
+        animal_emojis = {
+            "dog": "🐶",
+            "cat": "🐱",
+            "cow": "🐄",
+            "lion": "🦁",
+            "tiger": "🐯",
+            "monkey": "🐵",
+            "elephant": "🐘",
+            "panda": "🐼",
+            "rabbit": "🐰",
+            "fox": "🦊",
+            "bear": "🐻",
+            "chicken": "🐔",
+            "penguin": "🐧",
+            "horse": "🐴",
+            "frog": "🐸"
+        }
 
-    print(f"\nMy favorite animal is also {animal}! {emoji}")
-
+        emoji = animal_emojis.get(animal.lower(), "🐾")
+        st.write(f"My favorite animal is also {animal}! {emoji}")
 
 if __name__ == '__main__':
     main()
