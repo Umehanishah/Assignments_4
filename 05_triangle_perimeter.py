@@ -1,15 +1,17 @@
+import streamlit as st  # type: ignore
+
 def main():
-  
-    side1: float = float(input("What is the length of side 1? "))
-    side2: float = float(input("What is the length of side 2? "))
-    side3: float = float(input("What is the length of side 3? "))
+    st.title("📐 Triangle Perimeter Calculator")
 
-  
-    perimeter: float = side1 + side2 + side3
+    st.write("Enter the lengths of the three sides of the triangle:")
 
-    
-    print("The perimeter of the triangle is " + str(perimeter))
+    side1 = st.number_input("Length of side 1:", min_value=0.0, format="%.2f")
+    side2 = st.number_input("Length of side 2:", min_value=0.0, format="%.2f")
+    side3 = st.number_input("Length of side 3:", min_value=0.0, format="%.2f")
 
+    if st.button("Calculate Perimeter"):
+        perimeter = side1 + side2 + side3
+        st.success(f"📏 The perimeter of the triangle is: {perimeter:.2f}")
 
 if __name__ == '__main__':
     main()
