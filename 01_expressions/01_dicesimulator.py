@@ -1,29 +1,62 @@
 import random
+import time
 import streamlit as st
+from streamlit.components.v1 import html
 
-st.title("Dice Simulator 🎲")
+st.title("🎲 Dice Simulator")
 
-NUM_SIDES = 6
+# Custom CSS for dice animation
+st.markdown("""
+<style>
+.dice {
+    font-size: 5rem;
+    display: inline-block;
+    margin: 0 15px;
+    animation: shake 0.5s infinite;
+}
+@keyframes shake {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-15deg); }
+    50% { transform: rotate(0deg); }
+    75% { transform: rotate(15deg); }
+    100% { transform: rotate(0deg); }
+}
+</style>
+""", unsafe_allow_html=True)
+
+def show_dice(values=None):
+    dice_html = ""
+    for i in range(3):
+        if values and i < len(values):
+            dice_char = "⚀⚁⚂⚃⚄⚅"[values[i]-1]
+        else:
+            dice_char = "🎲"  # Default dice before roll
+        dice_html += f'<span class="dice" id="dice{i}">{dice_char}</span>'
+    
+    html(f"""
+    <div style="text-align: center; margin: 30px 0;">
+        {dice_html}
+    </div>
+    """)
 
 def roll_dice():
-    die1 = random.randint(1, NUM_SIDES)
-    die2 = random.randint(1, NUM_SIDES)
-    total = die1 + die2
-    st.write(f"🎯 You rolled: 🎲 {die1} + 🎲 {die2} = 💥 {total}")
-
-def main():
-    st.write("🎉 Welcome to the Dice Simulator!\n")
+    # Show rolling animation
+    show_dice()
     
-    die1 = 10  # This variable is local to main()
-    st.write("🔍 die1 in main() starts as: " + str(die1) + "\n")
+    # Generate random values after delay
+    time.sleep(1)
+    values = [random.randint(1, 6) for _ in range(3)]
+    show_dice(values)
+    
+    # Display results
+    total = sum(values)
+    st.success(f"🎯 You rolled: {values[0]} + {values[1]} + {values[2]} = **{total}**")
+    return total
 
-    st.write("🔁 Rolling dice 3 times...\n")
-    roll_dice()
-    roll_dice()
-    roll_dice()
+# Main app
+if st.button("🎲 Roll the Dice!", use_container_width=True):
+    with st.spinner("Rolling..."):
+        roll_dice()
 
-    st.write("\n📌 die1 in main() after rolling dice is still: " + str(die1))
-    st.write("\n🎲 Thanks for playing!")
-
-if __name__ == '__main__':
-    main()
+st.markdown("---")
+st.caption("Click the button above to roll three dice!")
