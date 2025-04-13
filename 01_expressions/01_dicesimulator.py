@@ -1,4 +1,7 @@
 import random
+import streamlit as st # type: ignore
+
+st.title("Dice Simulator 🎲")
 
 NUM_SIDES = 6
 
