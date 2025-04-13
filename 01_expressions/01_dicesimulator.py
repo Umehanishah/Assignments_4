@@ -1,18 +1,19 @@
 import random
 import time
 import streamlit as st
-from streamlit.components.v1 import html
-
-st.title("🎲 Dice Simulator")
 
 # Custom CSS for dice animation
 st.markdown("""
 <style>
+.dice-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 30px 0;
+}
 .dice {
     font-size: 5rem;
-    display: inline-block;
-    margin: 0 15px;
-    animation: shake 0.5s infinite;
+    animation: shake 0.5s;
 }
 @keyframes shake {
     0% { transform: rotate(0deg); }
@@ -24,39 +25,55 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-def show_dice(values=None):
-    dice_html = ""
-    for i in range(3):
-        if values and i < len(values):
-            dice_char = "⚀⚁⚂⚃⚄⚅"[values[i]-1]
-        else:
-            dice_char = "🎲"  # Default dice before roll
-        dice_html += f'<span class="dice" id="dice{i}">{dice_char}</span>'
-    
-    html(f"""
-    <div style="text-align: center; margin: 30px 0;">
-        {dice_html}
-    </div>
-    """)
+# Constants
+NUM_SIDES = 6
+DICE_FACES = ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"]
+
+def show_dice(die1_val=None, die2_val=None):
+    """Display dice with optional values (shows rolling if None)"""
+    cols = st.columns(2)
+    with cols[0]:
+        st.markdown(f'<div class="dice">{DICE_FACES[die1_val-1] if die1_val else "🎲"}</div>', 
+                   unsafe_allow_html=True)
+    with cols[1]:
+        st.markdown(f'<div class="dice">{DICE_FACES[die2_val-1] if die2_val else "🎲"}</div>', 
+                   unsafe_allow_html=True)
 
 def roll_dice():
+    """Simulates rolling two dice with visual animation"""
     # Show rolling animation
     show_dice()
     
     # Generate random values after delay
     time.sleep(1)
-    values = [random.randint(1, 6) for _ in range(3)]
-    show_dice(values)
+    die1 = random.randint(1, NUM_SIDES)
+    die2 = random.randint(1, NUM_SIDES)
+    
+    # Show final dice faces
+    show_dice(die1, die2)
     
     # Display results
-    total = sum(values)
-    st.success(f"🎯 You rolled: {values[0]} + {values[1]} + {values[2]} = **{total}**")
-    return total
+    total = die1 + die2
+    st.success(f"🎯 Rolled: {die1} + {die2} = **{total}**")
+    return die1, die2
 
-# Main app
-if st.button("🎲 Roll the Dice!", use_container_width=True):
-    with st.spinner("Rolling..."):
-        roll_dice()
+def main():
+    st.title("Dice Simulator with Scope Demo")
+    
+    die1_main = 10  # Local variable in main()
+    st.write(f"🔍 die1 in main() starts as: {die1_main}")
+    
+    if st.button("🎲 Roll Dice", key="roll_button"):
+        with st.spinner("Rolling..."):
+            # Roll dice 3 times as per requirements
+            for i in range(1, 4):
+                st.subheader(f"Roll {i}")
+                roll1, roll2 = roll_dice()
+                st.write(f"📊 Roll {i} values - die1: {roll1}, die2: {roll2}")
+                st.write("")  # Spacer
+    
+    st.write(f"📌 die1 in main() remains: {die1_main} (showing scope)")
+    st.caption("Note how die1 in main() stays 10 while the rolled dice show different values")
 
-st.markdown("---")
-st.caption("Click the button above to roll three dice!")
+if __name__ == '__main__':
+    main()
