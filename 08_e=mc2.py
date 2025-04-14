@@ -1,19 +1,24 @@
+import streamlit as st # type: ignore
+
 def main():
     # Speed of light in meters per second
-    C = 299792458  # m/s
+    C = 299_792_458  # m/s
 
-    # Prompt the user to enter mass in kilograms
-    mass_in_kg = float(input("💡 Enter kilos of mass: "))
+    st.title("💡 E = mc² Energy Calculator")
 
-    # Calculate energy using the formula E = m * C^2
-    energy_in_joules = mass_in_kg * (C ** 2)
+    # Get mass input from the user
+    mass_in_kg = st.number_input("Enter mass (kg):", min_value=0.0, format="%.2f")
 
-    # Display the results with icons and attractive look
-    print("\n🌟 e = m * C^2...")
-    print(f"📏 m = {mass_in_kg} kg")
-    print(f"⚡ C = {C} m/s")
-    print(f"💥 {energy_in_joules} joules of energy!\n")
+    if st.button("Calculate Energy 💥"):
+        # Calculate energy
+        energy_in_joules = mass_in_kg * (C ** 2)
 
-# This line ensures the main() function is called when the script is executed
+        # Display the results
+        st.markdown("### 🌟 Equation: E = m × c²")
+        st.write(f"📏 Mass (m): **{mass_in_kg} kg**")
+        st.write(f"⚡ Speed of Light (c): **{C} m/s**")
+        st.success(f"💥 Energy: **{energy_in_joules:,.2f} joules**")
+
 if __name__ == '__main__':
     main()
+s
