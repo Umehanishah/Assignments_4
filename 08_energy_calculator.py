@@ -1,4 +1,4 @@
-import streamlit as st # type: ignore
+import streamlit as st  # type: ignore
 
 def main():
     # Speed of light in meters per second
@@ -21,4 +21,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-s
